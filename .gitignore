@@ -1,0 +1,6 @@
+cmake-build-debug
+.idea
+.cursor
+.DS_Store
+*.iml
+.claude
