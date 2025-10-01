@@ -5,7 +5,7 @@
 
 #define MAX_LOCATIONS 2000
 
-int comp(const void* a, const void* b)
+int comparator(const void* a, const void* b)
 {
     return *(int*)a - *(int*)b;
 }
@@ -35,8 +35,8 @@ int main()
 
     fclose(file);
 
-    qsort(left_list, location_count, sizeof(int), comp);
-    qsort(right_list, location_count, sizeof(int), comp);
+    qsort(left_list, location_count, sizeof(int), comparator);
+    qsort(right_list, location_count, sizeof(int), comparator);
 
     for (int i = 0; i < location_count; i++)
     {
