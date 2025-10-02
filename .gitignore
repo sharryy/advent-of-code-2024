@@ -1,11 +1,31 @@
 cmake-build-debug
-.idea
-.cursor
 .DS_Store
 *.iml
-.claude
 
 # CMake generated files
 CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake
+
+# Compiled executables (files with executable permission but no extension)
+*
+!*/
+!*.*
+!Makefile
+!makefile
+!CMakeLists.txt
+
+# Re-ignore directories that should stay ignored
+.idea/
+.cursor/
+.claude/
+cmake-build-debug/
+
+# Common C/C++ build artifacts
+*.o
+*.obj
+*.a
+*.so
+*.dylib
+*.exe
+*.out
