@@ -11,25 +11,33 @@
 - `dayN/a.txt`, `dayN/b.txt` — Plain-text walkthroughs describing problem analysis, algorithm choices, and verification notes.
 
 ## Build & Run
-- **Makefile (recommended)**
-  - Build everything: `make`
-  - Execute all parts sequentially: `make run`
-  - Run an individual part: `make day1_part1`, `make day1_part2`, `make day2_part1`, or `make day2_part2`
-- **CMake (optional)**
-  1. Configure the project:
-     ```sh
-     cmake -S /Users/sharryy/CLionProjects/advent-of-code -B /Users/sharryy/CLionProjects/advent-of-code/cmake-build-debug
-     ```
-  2. Build and run a specific part:
-     ```sh
-     cmake --build /Users/sharryy/CLionProjects/advent-of-code/cmake-build-debug --target day1_a
-     /Users/sharryy/CLionProjects/advent-of-code/cmake-build-debug/day1/day1_a
-     ```
-- **Manual compilation**
-  ```sh
-  clang -O3 -std=c17 /Users/sharryy/CLionProjects/advent-of-code/day1/a.c -o day1_part1
-  ./day1_part1
-  ```
+
+Each solution reads from `input.txt` in its respective directory. Compile and run from within each day's folder:
+
+```sh
+# Day 1 Part 1
+cd day1
+clang -o3 -std=c17 a.c -o a
+./a
+
+# Day 1 Part 2
+clang -o3 -std=c17 b.c -o b
+./b
+
+# Day 2 Part 1
+cd day2
+clang -o3 -std=c17 a.c -o a
+./a
+
+# Day 2 Part 2
+clang -o3 -std=c17 b.c -o b
+./b
+```
+
+You can also use `gcc` instead of `clang`:
+```sh
+gcc -O3 -std=c17 a.c -o a
+```
 
 ## Packaging for Submission
 - Ensure each solution file follows the required naming convention `Day[Number]_part[Number].c` and each explanation file follows `Day[Number]_part[Number].txt`.
