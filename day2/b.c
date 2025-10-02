@@ -92,7 +92,7 @@ bool is_safe_with_dampener(const int report[], const int count)
     return false;
 }
 
-int main()
+int main(void)
 {
     char buffer[MAX_LINE_LENGTH];
 

@@ -42,7 +42,7 @@ bool is_report_safe(const int report[], const int count)
 }
 
 
-int main()
+int main(void)
 {
     char buffer[MAX_LINE_LENGTH];
 

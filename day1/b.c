@@ -25,7 +25,7 @@ int freq_comparator(const void* a, const void* b)
     return key - item->value;
 }
 
-int main()
+int main(void)
 {
     int left_list[MAX_LOCATIONS];
     int right_list[MAX_LOCATIONS];

@@ -8,23 +8,28 @@
 ## Project Layout
 - `day1/a.c`, `day1/b.c` — Solutions for Day 1 Parts A and B with shared `input.txt`.
 - `day2/a.c`, `day2/b.c` — Solutions for Day 2 Parts A and B with shared `input.txt`.
-- `dayN/a.md`, `dayN/b.md` — Per-part walkthroughs describing problem analysis, algorithm choices, and verification notes.
+- `dayN/a.txt`, `dayN/b.txt` — Plain-text walkthroughs describing problem analysis, algorithm choices, and verification notes.
 
 ## Build & Run
-1. Configure the project (optional if compiling directly):
-   ```sh
-   cmake -S /Users/sharryy/CLionProjects/advent-of-code -B /Users/sharryy/CLionProjects/advent-of-code/cmake-build-debug
-   ```
-2. Build and run a specific part, for example Day 1 Part A:
-   ```sh
-   cmake --build /Users/sharryy/CLionProjects/advent-of-code/cmake-build-debug --target day1_a
-   /Users/sharryy/CLionProjects/advent-of-code/cmake-build-debug/day1/day1_a
-   ```
-3. Alternatively, compile a file directly with `clang` or `gcc`:
-   ```sh
-   clang -O3 -std=c17 /Users/sharryy/CLionProjects/advent-of-code/day1/a.c -o day1_part1
-   ./day1_part1
-   ```
+- **Makefile (recommended)**
+  - Build everything: `make`
+  - Execute all parts sequentially: `make run`
+  - Run an individual part: `make day1_part1`, `make day1_part2`, `make day2_part1`, or `make day2_part2`
+- **CMake (optional)**
+  1. Configure the project:
+     ```sh
+     cmake -S /Users/sharryy/CLionProjects/advent-of-code -B /Users/sharryy/CLionProjects/advent-of-code/cmake-build-debug
+     ```
+  2. Build and run a specific part:
+     ```sh
+     cmake --build /Users/sharryy/CLionProjects/advent-of-code/cmake-build-debug --target day1_a
+     /Users/sharryy/CLionProjects/advent-of-code/cmake-build-debug/day1/day1_a
+     ```
+- **Manual compilation**
+  ```sh
+  clang -O3 -std=c17 /Users/sharryy/CLionProjects/advent-of-code/day1/a.c -o day1_part1
+  ./day1_part1
+  ```
 
 ## Packaging for Submission
 - Ensure each solution file follows the required naming convention `Day[Number]_part[Number].c` and each explanation file follows `Day[Number]_part[Number].txt`.
