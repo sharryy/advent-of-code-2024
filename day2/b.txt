@@ -1,0 +1,31 @@
+Day 2 — Part 2 Walkthrough
+
+Problem Snapshot
+- Same reports as Part 1, but a single level can be removed per report via the "Problem Dampener" to salvage unsafe reports.
+
+Approach
+- Reuse the strict is_report_safe predicate from Part 1 for direct checks.
+- When a report fails, iterate candidate indices, copy all other levels into a stack-allocated scratch array, and recheck safety.
+- Stop early as soon as any removal yields a safe sequence.
+
+Implementation Notes
+- child array uses VLAs (C17 optional extension); CLion toolchain enables them. Alternatively, could allocate once on the stack with MAX_LEVELS_PER_LINE.
+- remove_index_at copies values sequentially, preserving order to support revalidation without extra bookkeeping.
+- The dampener check short-circuits to avoid needless work once a valid subsequence is found.
+
+Why It Works
+- Worst-case complexity remains tractable with Advent of Code report sizes (<= 100 entries): O(n^2) per report in the degenerate case, but typically exits after 0-2 removals.
+- Avoids recursion and dynamic memory; stack arrays remain within typical limits.
+- Mirrors the puzzle's description exactly—remove at most one value and retest.
+
+Complexity
+- Time: Up to O(n^2) per report but fast in practice thanks to short sequences and early exits.
+- Memory: O(n) for the scratch array required during removal attempts.
+
+Running the Solution
+make day2_part2
+
+Validation
+- Matches sample outputs and the official Part 2 leaderboard answer.
+- Manually stressed: sequences requiring removal at beginning/middle/end and sequences already valid to ensure early shortcut works.
+- Added quick sanity runs: single-digit reports become safe when the lone outlier is removed; already safe reports skip the removal loop entirely.

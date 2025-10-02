@@ -1,0 +1,31 @@
+Day 1 — Part 1 Walkthrough
+
+Problem Snapshot
+- Input: pairs of location IDs, one per column, across many rows.
+- Goal: minimize the total distance between paired IDs after independently sorting both columns.
+
+Approach
+- Parse the file once, collecting left and right IDs in fixed-size arrays (MAX_LOCATIONS = 2000).
+- Sort both arrays with qsort, using a minimal comparator.
+- Accumulate the absolute differences between sorted pairs using a 64-bit accumulator to prevent overflow.
+
+Implementation Notes
+- The comparator returns the integer difference directly; on the provided input range the subtraction stays within 32-bit limits.
+- Arrays are zero-initialised by definition scope, ensuring deterministic behaviour even if the input has fewer than MAX_LOCATIONS rows.
+- If the puzzle input ever exceeded the hard cap, additional rows would be silently ignored; this mirrors the small AoC data sizes but is documented here for transparency.
+
+Why It Works
+- Sorting both sequences individually yields the minimal sum of absolute differences.
+- Static arrays keep the implementation predictable and fast for the Advent of Code input size.
+
+Complexity
+- Time: O(n log n) dominated by the two sorts.
+- Memory: O(n) for the two arrays of integers.
+
+Running the Solution
+make day1_part1
+
+Validation
+- Verified against the provided sample and full puzzle input.
+- Outputs match the expected Advent of Code answer for Part 1.
+- Spot-checked handcrafted cases: identical lists produce distance 0; reversed sequences yield the same total as forward sequences after sorting.

@@ -1,0 +1,33 @@
+Day 1 — Part 2 Walkthrough
+
+Problem Snapshot
+- Input identical to Part 1: two columns of location IDs.
+- Goal: compute a similarity score for each left ID based on its frequency in the right column.
+
+Approach
+- Parse the input once into left and right arrays (MAX_LOCATIONS = 2000).
+- Sort the right column to group duplicates contiguously.
+- Compress the right column into (value, count) pairs using a tight loop.
+- For each left ID, look up its frequency with bsearch over the compacted array and accumulate value * count into a 64-bit similarity total.
+
+Implementation Notes
+- Run-length encoding happens in-place: the frequency buffer reuses the right-array slots, avoiding extra allocations.
+- bsearch expects the array sorted by value; because the compression walks the sorted right list, the invariant holds automatically.
+- Similarity accumulation uses long long to handle 2000 * 2000 worst-case multiplier safely (up to ~4e6) with margin.
+
+Why It Works
+- Sorting plus run-length encoding avoids nested scans (O(n log n) instead of quadratic).
+- Binary search leverages the compacted structure while keeping the code simple and cache-friendly.
+- Using long long guarantees headroom for the product across input bounds.
+
+Complexity
+- Time: O(n log n) due to sorting and binary searches.
+- Memory: O(n) for the original arrays plus the frequency table.
+
+Running the Solution
+make day1_part2
+
+Validation
+- Confirmed with the Advent of Code example and full input; output matches expected leaderboard value.
+- Spot-checked edge cases (all identical IDs, strictly unique IDs) to ensure reasonable behavior.
+- Additional experiments: a left ID absent from the right list contributes zero similarity, validating the bsearch guard.

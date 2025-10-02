@@ -1,0 +1,32 @@
+Day 2 — Part 1 Walkthrough
+
+Problem Snapshot
+- Input: each line is a report containing a sequence of integer levels.
+- Goal: count reports where levels change steadily (always increasing or always decreasing) with step sizes between 1 and 3.
+
+Approach
+- Read each report line using fgets, tokenize on whitespace with strtok, and store levels into a fixed-size array.
+- is_report_safe checks direction once from the first pair, then validates every adjacent difference shares that direction and magnitude within [1, 3].
+- Increment a safe counter for each report satisfying the predicate.
+
+Implementation Notes
+- strtok handles consecutive spaces and trailing newline characters out of the box, simplifying parsing.
+- The helper returns false immediately for reports shorter than two entries, aligning with puzzle rules.
+- abs is used on the difference to avoid redundant branches when evaluating magnitude thresholds.
+
+Why It Works
+- Early direction detection eliminates redundant branching inside the loop.
+- Reusing a preallocated buffer avoids heap churn and suits the fixed Advent of Code constraints.
+- Rejecting zero-diff and large jumps directly mirrors the puzzle rules.
+
+Complexity
+- Time: O(T) where T is the total number of levels across all reports.
+- Memory: O(1) auxiliary beyond the current report storage.
+
+Running the Solution
+make day2_part1
+
+Validation
+- Verified against sample inputs and the official Part 1 answer.
+- Tested edge scenarios: minimal report length, maximum allowed step difference, and direction flips to ensure rejection.
+- Manual regression: ascending sequences with mix of 1-, 2-, and 3-step jumps are accepted; any level plateau fails as intended.
