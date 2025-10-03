@@ -36,7 +36,7 @@ int main()
             else if (strncmp(buffer + i, "do()", 4) == 0)
             {
                 is_enabled = true;
-                i += (4 - 1); // for loop advances by 1 automatically
+                i += (4 - 1x); // for loop advances by 1 automatically
             }
 
             if (is_enabled && strncmp(buffer + i, "mul(", 4) == 0)

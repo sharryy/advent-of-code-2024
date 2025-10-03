@@ -9,4 +9,6 @@ add_executable(advent_of_code main.c
         day2/a.c
         day2/b.c
         day3/a.c
-        day3/b.c)
+        day3/b.c
+        day4/a.c
+        day4/b.c)
