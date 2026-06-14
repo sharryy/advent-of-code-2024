@@ -2,78 +2,58 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define ROWS 140
-#define COLUMNS 140
-#define XMAS "XMAS"
-
-typedef enum
-{
-    NORTH,
-    NORTH_EAST,
-    EAST,
-    SOUTH_EAST,
-    SOUTH,
-    SOUTH_WEST,
-    WEST,
-    NORTH_WEST,
-    NUM_DIRECTIONS
-} direction_t;
-
-typedef struct
-{
-    int dx;
-    int dy;
-} direction_vector_t;
-
-const direction_vector_t DIRECTIONS[NUM_DIRECTIONS] = {
-    {-1, 0}, // NORTH
-    {-1, 1}, // NORTH-EAST
-    {0, 1}, // EAST
-    {1, 1}, // SOUTH-EAST
-    {1, 0}, // SOUTH
-    {1, -1}, // SOUTH-WEST
-    {0, -1}, // WEST
-    {-1, -1} // NORTH-WEST
-};
-
-
-void traverse(char grid[][COLUMNS], int row, int col, int* words_count)
-{
-    // TODO: Implement Traversing Of Graph
-}
-
 int main()
 {
-    char grid[ROWS][COLUMNS];
-    char buffer[COLUMNS + 2]; // +1 for null terminator, +1 for newline
-    int rows_read = 0;
-    int words_count = 0;
-
     FILE* file = fopen("input.txt", "r");
 
-    if (file == NULL)
-    {
-        printf("Error opening file\n");
+    if (file == NULL) {
+        perror("Error Opening the File");
         return 1;
     }
 
-    while (rows_read < ROWS && fgets(buffer, sizeof(buffer), file) != NULL)
-    {
-        strncpy(grid[rows_read++], buffer, COLUMNS);
+    fseek(file, 0, SEEK_END);
+
+    long int file_size = ftell(file);
+
+    char* buffer = malloc(file_size * sizeof(char) + 1);
+
+    fseek(file, 0, SEEK_SET);
+
+    size_t bytes_read = fread(buffer, sizeof(char), file_size, file);
+
+    buffer[bytes_read] = '\0';
+
+    long int width = -1;
+
+    for (size_t i = 0; i < file_size; i++) {
+        if (buffer[i] == '\n') {
+            width = i;
+            break;
+        }
     }
 
-    fclose(file);
+    if (width == -1) {
+        perror("Unable to find width through new-line.\n");
+        return -1;
+    }
 
-    for (int i = 0; i < ROWS; i++)
-    {
-        for (int j = 0; j < COLUMNS; j++)
-        {
-            if (grid[i][j] == XMAS[0])
-            {
-                traverse(grid, i, j, &words_count);
+    long int count = 0;
+
+    size_t rows = (file_size + 1)/(width + 1);
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < width - 3; j++) {
+            size_t idx = i * (width + 1) + j;
+            if (buffer[idx] == 'X' && buffer[idx + 1] == 'M' && buffer[idx + 2] == 'A' && buffer[idx + 3] == 'S') {
+                count++;
             }
         }
     }
 
-    printf("%d\n", words_count);
+    printf("count: %ld\n", count);
+
+
+    free(buffer);
+
+    return 0;
 }
