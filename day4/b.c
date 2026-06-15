@@ -40,15 +40,10 @@ int main() {
   for (size_t i = 1; i < rows - 1; i++) {
     for (size_t j = 1; j < width - 1; j++) {
       size_t idx = i * (width + 1) + j;
-      // printf("idx: %zu - value: %c\n", idx, buffer[idx]);
       size_t top_left_idx = idx - (width + 1) - 1;
-      // printf("top-left-idx: %zu\n", top_left_idx);
       size_t top_right_idx = idx - (width + 1) + 1;
-      // printf("top-right-idx: %zu\n", top_right_idx);
       size_t bottom_left_idx = idx + (width + 1) - 1;
-      // printf("bottom-left-idx: %zu\n", bottom_left_idx);
       size_t bottom_right_idx = idx + (width + 1) + 1;
-      // printf("bottom-right-idx: %zu\n", bottom_right_idx);
 
       if (buffer[idx] != 'A') {
         continue;
