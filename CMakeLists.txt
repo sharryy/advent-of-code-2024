@@ -3,7 +3,7 @@ project(advent_of_code C)
 
 set(CMAKE_C_STANDARD 17)
 
-add_executable(advent_of_code main.c
+add_executable(advent_of_code
         day1/a.c
         day1/b.c
         day2/a.c
