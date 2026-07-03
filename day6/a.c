@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef enum direction_t { NORTH, EAST, SOUTH, WEST } direction_t;
+
 int already_visited(char *table, int position) {
   if (table[position] == 1) {
     return 1;
@@ -42,12 +44,12 @@ int main() {
   }
 
   int position = -1;
-  int direction = 1;
+  direction_t direction = NORTH;
 
   for (int i = 0; i < size; i++) {
     if (buffer[i] == '^') {
       position = i;
-      direction = 1;
+      direction = NORTH;
       break;
     }
   }
@@ -63,57 +65,50 @@ int main() {
   }
 
   while (move) {
-
     switch (direction) {
-    case 1:
-      // "NORTH"
-      {
-        int new_position = position - (columns + 1);
+    case NORTH: {
+      int new_position = position - (columns + 1);
 
-        if (new_position >= 0 && new_position < size) {
-          if (buffer[new_position] != '#') {
-            buffer[new_position] = '^';
-            position = new_position;
-            if (!already_visited(lookup_table, new_position)) {
-              visit_location(lookup_table, new_position);
-              count++;
-            }
-          } else {
-            direction = 3;
-            buffer[position] = '>';
+      if (new_position >= 0 && new_position < size) {
+        if (buffer[new_position] != '#') {
+          buffer[new_position] = '^';
+          position = new_position;
+          if (!already_visited(lookup_table, new_position)) {
+            visit_location(lookup_table, new_position);
+            count++;
           }
         } else {
-          move = 0;
+          direction = EAST;
+          buffer[position] = '>';
         }
+      } else {
+        move = 0;
       }
+    }
 
-      break;
-    case 2:
-      // "SOUTH"
-      {
-        int new_position = position + (columns + 1);
+    break;
+    case SOUTH: {
+      int new_position = position + (columns + 1);
 
-        if (new_position >= 0 && new_position < size) {
-          if (buffer[new_position] != '#') {
-            buffer[new_position] = 'v';
-            position = new_position;
-            if (!already_visited(lookup_table, new_position)) {
-              visit_location(lookup_table, new_position);
-              count++;
-            }
-          } else {
-            direction = 4;
-            buffer[position] = '<';
+      if (new_position >= 0 && new_position < size) {
+        if (buffer[new_position] != '#') {
+          buffer[new_position] = 'v';
+          position = new_position;
+          if (!already_visited(lookup_table, new_position)) {
+            visit_location(lookup_table, new_position);
+            count++;
           }
         } else {
-          move = 0;
+          direction = WEST;
+          buffer[position] = '<';
         }
+      } else {
+        move = 0;
       }
+    }
 
-      break;
-    case 3: {
-      // "EAST"
-
+    break;
+    case EAST: {
       int new_position = position + 1;
 
       if (new_position >= 0 && new_position < size) {
@@ -125,7 +120,7 @@ int main() {
             count++;
           }
         } else {
-          direction = 2;
+          direction = SOUTH;
           buffer[position] = 'v';
         }
       } else {
@@ -134,29 +129,27 @@ int main() {
     }
 
     break;
-    case 4:
-      // "WEST"
-      {
-        int new_position = position - 1;
+    case WEST: {
+      int new_position = position - 1;
 
-        if (new_position >= 0 && new_position < size) {
-          if (buffer[new_position] != 0x0a && buffer[new_position] != '#') {
-            buffer[new_position] = '<';
-            position = new_position;
-            if (!already_visited(lookup_table, new_position)) {
-              visit_location(lookup_table, new_position);
-              count++;
-            }
-          } else {
-            direction = 1;
-            buffer[position] = '^';
+      if (new_position >= 0 && new_position < size) {
+        if (buffer[new_position] != 0x0a && buffer[new_position] != '#') {
+          buffer[new_position] = '<';
+          position = new_position;
+          if (!already_visited(lookup_table, new_position)) {
+            visit_location(lookup_table, new_position);
+            count++;
           }
         } else {
-          move = 0;
+          direction = NORTH;
+          buffer[position] = '^';
         }
+      } else {
+        move = 0;
       }
+    }
 
-      break;
+    break;
     }
   }
 
