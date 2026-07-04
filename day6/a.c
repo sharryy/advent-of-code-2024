@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define OBSTACLE '#'
+
 typedef enum direction_t { NORTH, EAST, SOUTH, WEST } direction_t;
 
 int already_visited(char *table, int position) {
@@ -64,92 +66,26 @@ int main() {
     return -1;
   }
 
+  char marker[] = {'^', '>', 'v', '<'};
+  int offsets[] = {-(columns + 1), +1, +(columns + 1), -1};
+
   while (move) {
-    switch (direction) {
-    case NORTH: {
-      int new_position = position - (columns + 1);
+    int new_pos = position + offsets[direction];
 
-      if (new_position >= 0 && new_position < size) {
-        if (buffer[new_position] != '#') {
-          buffer[new_position] = '^';
-          position = new_position;
-          if (!already_visited(lookup_table, new_position)) {
-            visit_location(lookup_table, new_position);
-            count++;
-          }
-        } else {
-          direction = EAST;
-          buffer[position] = '>';
+    if (new_pos >= 0 && new_pos < size) {
+      if (buffer[new_pos] != OBSTACLE) {
+        buffer[new_pos] = marker[direction];
+        position = new_pos;
+        if (!already_visited(lookup_table, new_pos)) {
+          visit_location(lookup_table, new_pos);
+          count++;
         }
       } else {
-        move = 0;
+        direction = (direction + 1) % 4;
+        buffer[position] = marker[direction];
       }
-    }
-
-    break;
-    case SOUTH: {
-      int new_position = position + (columns + 1);
-
-      if (new_position >= 0 && new_position < size) {
-        if (buffer[new_position] != '#') {
-          buffer[new_position] = 'v';
-          position = new_position;
-          if (!already_visited(lookup_table, new_position)) {
-            visit_location(lookup_table, new_position);
-            count++;
-          }
-        } else {
-          direction = WEST;
-          buffer[position] = '<';
-        }
-      } else {
-        move = 0;
-      }
-    }
-
-    break;
-    case EAST: {
-      int new_position = position + 1;
-
-      if (new_position >= 0 && new_position < size) {
-        if (buffer[new_position] != 0x0a && buffer[new_position] != '#') {
-          buffer[new_position] = '>';
-          position = new_position;
-          if (!already_visited(lookup_table, new_position)) {
-            visit_location(lookup_table, new_position);
-            count++;
-          }
-        } else {
-          direction = SOUTH;
-          buffer[position] = 'v';
-        }
-      } else {
-        move = 0;
-      }
-    }
-
-    break;
-    case WEST: {
-      int new_position = position - 1;
-
-      if (new_position >= 0 && new_position < size) {
-        if (buffer[new_position] != 0x0a && buffer[new_position] != '#') {
-          buffer[new_position] = '<';
-          position = new_position;
-          if (!already_visited(lookup_table, new_position)) {
-            visit_location(lookup_table, new_position);
-            count++;
-          }
-        } else {
-          direction = NORTH;
-          buffer[position] = '^';
-        }
-      } else {
-        move = 0;
-      }
-    }
-
-    break;
+    } else {
+      move = 0;
     }
   }
 
